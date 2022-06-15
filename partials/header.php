@@ -1,3 +1,10 @@
+<?php 
+$styles = json_decode(file_get_contents("colors.json"), true);
+$color = $styles["color"];
+
+$path = parse_url($_SERVER["REQUEST_URI"],PHP_URL_PATH);
+$url = "http://$_SERVER[HTTP_HOST]$path";
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,14 +12,26 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+  <!-- FontAwesome -->
+  <script src="https://kit.fontawesome.com/92b62ee1cc.js" crossorigin="anonymous"></script>
+
+
   <!-- Bootstrap -->
-  <link
+  <?php if($color != "dark"): ?>
+    <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/flatly/bootstrap.min.css"
+    />
+  <?php else:?>
+    <link
     rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/5.1.3/darkly/bootstrap.min.css"
     integrity="sha512-ZdxIsDOtKj2Xmr/av3D/uo1g15yxNFjkhrcfLooZV5fW0TT7aF7Z3wY1LOA16h0VgFLwteg14lWqlYUQK3to/w=="
     crossorigin="anonymous"
     referrerpolicy="no-referrer"
-  />
+    />
+  <?php endif?>
+
   <script
     defer
     src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
@@ -27,9 +46,7 @@
     <script defer src="./static/js/welcome.js"></script>
   <?php endif ?>
 
-  <!-- FontAwesome -->
-  <script src="https://kit.fontawesome.com/92b62ee1cc.js" crossorigin="anonymous"></script>
-
+  
   <title>Contacts App</title>
 </head>
 <body>
@@ -55,5 +72,5 @@
   <?php endif ?>
 
 
-  <main>
+  <main >
     <!-- Content Here -->
