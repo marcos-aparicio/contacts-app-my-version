@@ -5,6 +5,6 @@ $styles["color"] = "dark";
 
 file_put_contents("colors.json",json_encode($styles));
 
-$variable = 5;
+$variable = 8;
 
 Header("Location: $url");
