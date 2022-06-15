@@ -1,6 +1,9 @@
 .navbar img {
     width: 1.2rem;
 }
+.navbar{
+    padding:1rem 0;
+}
 
 .welcome {
     background: url('/contacts_app_dark/static/img/background.jpg');

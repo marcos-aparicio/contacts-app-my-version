@@ -17,7 +17,7 @@
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
-      <div class="d-flex justify-content-between w-100">
+      <div class="d-flex justify-content-between w-100 align-items-center">
         <ul class="navbar-nav">
           <?php if (isset($_SESSION["user"])): ?>
             <li class="nav-item">
@@ -38,7 +38,7 @@
             </li>
           <?php endif ?>
         </ul>
-        <div class="p-2">
+        <div class="p-2 d-flex align-items-center">
         <?php if($color == "light"):?>
           <a class = "border-dark btn rounded-circle " href = "dark.php?color=dark?">
             <i class="fa-solid fa-moon"></i>
