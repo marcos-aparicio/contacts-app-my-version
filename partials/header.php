@@ -20,7 +20,7 @@ $url = "http://$_SERVER[HTTP_HOST]$path";
   <?php if($color != "dark"): ?>
     <link
     rel="stylesheet"
-    href="../static/css/flatly.css"
+    href="static/css/flatly.css"
     />
   <?php else:?>
     <link
