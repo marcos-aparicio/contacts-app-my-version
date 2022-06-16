@@ -1,5 +1,5 @@
 <?php
-
+  //comentario xd
   require "database.php";
 
   session_start();
