@@ -46,7 +46,10 @@
         ":phone_number" => $_POST["phone_number"],
       ]);
 
-      $_SESSION["flash"] = ["message" => "Contact {$_POST['name']} updated."];
+      $_SESSION["flash"] = [
+        "message" => "Contact {$_POST['name']} updated.",
+        "color" => "info"
+      ];
 
       header("Location: home.php");
       return;
