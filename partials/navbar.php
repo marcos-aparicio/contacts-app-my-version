@@ -40,11 +40,11 @@
         </ul>
         <div class="p-2 d-flex align-items-center">
         <?php if($color == "light"):?>
-          <a class = "border-dark btn rounded-circle" href = "dark.php?color=dark?">
+          <a class = "border-dark btn rounded-circle" href = "./theme_changes/theme.php?color=dark">
             <i class="fa-solid fa-moon"></i>
           </a>
         <?php else:?>
-          <a class = "border-light btn rounded-circle" href = "light.php?color=light">
+          <a class = "border-light btn rounded-circle" href = "./theme_changes/theme.php?color=light">
             <i class="fa-solid fa-sun"></i>
           </a>
         <?php endif?>
