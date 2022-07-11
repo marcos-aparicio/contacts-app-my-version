@@ -1,13 +1,6 @@
 <?php
 
-  require "./functionality/database.php";
-
-  session_start();
-
-  if (!isset($_SESSION["user"])) {
-    header("Location: login.php");
-    return;
-  }
+  require "./functionality/session.php";
 
   $error = null;
 

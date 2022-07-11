@@ -1,13 +1,6 @@
 <?php
 
-require "./functionality/database.php";
-
-session_start();
-
-if (!isset($_SESSION["user"])) {
-  header("Location: login.php");
-  return;
-}
+require "./functionality/session.php";
 
 $contacts = $conn->query("SELECT * FROM contacts WHERE user_id = {$_SESSION['user']['id']}");
 
