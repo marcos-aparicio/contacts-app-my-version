@@ -2,7 +2,12 @@
   
 require "./functionality/session.php";
 
-HTTP_error_handling();
+
+$statement = $conn->prepare("SELECT * FROM contacts WHERE id = :id LIMIT 1");
+$statement->execute([":id" => $_GET["id"]]);
+$contact = $statement->fetch(PDO::FETCH_ASSOC);
+
+HTTP_error_handling($statement, $contact);
 
 $error = null;
 $errorType = null;
@@ -31,7 +36,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $statement = $conn->prepare("UPDATE contacts SET name = :name, phone_number = :phone_number WHERE id = :id");
     $statement->execute([
-      ":id" => $_GET["id"],
+      ":id" => $id,
       ":name" => $_POST["name"],
       ":phone_number" => $_POST["phone_number"],
     ]);
@@ -61,7 +66,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
               <?= $error ?>
             </p>
           <?php endif ?>
-          <form method="POST" action="edit.php?id=<?= $contact['id'] ?>" name="input">
+          <form method="POST" action="edit.php?id=<?= $contact['id']?>" name="input">
             <div class="mb-3 row">
               <label for="name" class="col-md-4 col-form-label text-md-end">Name</label>
 

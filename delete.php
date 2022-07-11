@@ -2,9 +2,15 @@
 
 require "./functionality/session.php";
 
-HTTP_error_handling();
 
-$conn->prepare("DELETE FROM contacts WHERE id = :id")->execute([":id" => $id]);
+$statement = $conn->prepare("SELECT * FROM contacts WHERE id = :id LIMIT 1");
+$statement->execute([":id" => $_GET["id"]]);
+$contact = $statement->fetch(PDO::FETCH_ASSOC);
+
+HTTP_error_handling($statement,$contact);
+
+
+$conn->prepare("DELETE FROM contacts WHERE id = :id")->execute([":id" => $_GET["id"]]);
 
 $_SESSION["flash"] = [
   "message" => "Contact {$contact['name']} deleted.",
