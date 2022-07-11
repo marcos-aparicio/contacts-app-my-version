@@ -26,9 +26,14 @@ function HTTP_error_handling($statement,$object_array){
     }
 }
 
-function POST_edit_contact($id,$contact){
+function POST_edit_contact(){
     global $conn;
     
+    $statement = $conn->prepare("SELECT * FROM contacts WHERE id = :id LIMIT 1");
+    $statement->execute([":id" => $_GET["id"]]);
+    $contact = $statement->fetch(PDO::FETCH_ASSOC);
+
+
     $_SESSION["error"]["saved_name"] = $contact["name"];
     $_SESSION["error"]["saved_phone_number"] = $contact["phone_number"];
     $_SESSION["error"]["explanation"] = "";
@@ -53,11 +58,10 @@ function POST_edit_contact($id,$contact){
         return;
     }
 
-    
     $statement = $conn->prepare("UPDATE contacts SET name = :name, phone_number = :phone_number WHERE id = :id");
 
     $statement->execute([
-        ":id" => $id,
+        ":id" => $_GET["id"],
         ":name" => $_POST["name"],
         ":phone_number" => $_POST["phone_number"],
     ]);
@@ -70,7 +74,8 @@ function POST_edit_contact($id,$contact){
     header("Location: home.php");
     die();   
 }
-function POST_add_contact($id){
+
+function POST_add_contact(){
     global $conn;
     
     $_SESSION["error"]["saved_name"] = "";
@@ -101,7 +106,7 @@ function POST_add_contact($id){
     $statement = $conn->prepare("INSERT INTO contacts (user_id, name, phone_number) VALUES (:id, :name, :phone_number)");
     
     $statement->execute([
-        ":id" => $id,
+        ":id" => $_SESSION["user"]["id"],
         ":name" => $_POST["name"],
         ":phone_number" => $_POST["phone_number"],
     ]);

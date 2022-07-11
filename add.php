@@ -2,9 +2,7 @@
 
 require "./functionality/session.php";
 
-$error = null;
-
-POST_add_contact($_SESSION["user"]["id"]);
+POST_add_contact();
 
 ?>
 

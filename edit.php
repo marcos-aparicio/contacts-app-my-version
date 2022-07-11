@@ -9,7 +9,7 @@ $contact = $statement->fetch(PDO::FETCH_ASSOC);
 
 HTTP_error_handling($statement, $contact);
 
-POST_edit_contact($_GET["id"],$contact);
+POST_edit_contact();
 
 ?>
 
