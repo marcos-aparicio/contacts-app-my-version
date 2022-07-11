@@ -1,6 +1,6 @@
 <?php
 
-require "database.php";
+require "./functionality/database.php";
 
 session_start();
 
