@@ -26,10 +26,6 @@ function HTTP_error_handling($statement,$object_array){
     }
 }
 
-/**
- * 
- * 
- */
 function POST_edit_contact($id,$contact){
     global $conn;
     
@@ -80,7 +76,7 @@ function POST_add_contact($id){
     $_SESSION["error"]["saved_name"] = "";
     $_SESSION["error"]["saved_phone_number"] = "";
     $_SESSION["error"]["explanation"] = "";
-    $_SESSION["error"]["type"] = null;
+    $_SESSION["error"]["type"] = 1;
 
     if($_SERVER["REQUEST_METHOD"] != "POST") return;
             
@@ -111,8 +107,8 @@ function POST_add_contact($id){
     ]);
 
     $_SESSION["flash"] = [
-        "message" => "Contact {$_POST['name']} updated.",
-        "color" => "info"
+        "message" => "Contact {$_POST['name']} added.",
+        "color" => "success"
     ];
 
     header("Location: home.php");

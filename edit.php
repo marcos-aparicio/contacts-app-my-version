@@ -9,7 +9,6 @@ $contact = $statement->fetch(PDO::FETCH_ASSOC);
 
 HTTP_error_handling($statement, $contact);
 
-//Variables in Session Error are used
 POST_edit_contact($_GET["id"],$contact);
 
 ?>

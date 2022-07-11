@@ -48,7 +48,7 @@ POST_add_contact($_SESSION["user"]["id"]);
                   class="form-control"
                   name="phone_number"
                   autocomplete="phone_number"
-                  <?php if($_SESSION["error"]["type"] != 1):?> autofocus <?php endif?> 
+                  <?php if($_SESSION["error"]["type"] != 1 && $_SESSION["error"]["explanation"]):?> autofocus <?php endif?> 
                 >
               </div>
             </div>
