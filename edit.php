@@ -10,7 +10,7 @@ $contact = $statement->fetch(PDO::FETCH_ASSOC);
 HTTP_error_handling($statement, $contact);
 
 //Variables in Session Error are used
-POST_contact_validation($_GET["id"],$contact);
+POST_edit_contact($_GET["id"],$contact);
 
 ?>
 

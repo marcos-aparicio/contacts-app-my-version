@@ -1,35 +1,11 @@
 <?php
 
-  require "./functionality/session.php";
+require "./functionality/session.php";
 
-  $error = null;
+$error = null;
 
-  if ($_SERVER["REQUEST_METHOD"] == "POST") {
+POST_add_contact($_SESSION["user"]["id"]);
 
-    if (empty($_POST["name"]) || empty($_POST["phone_number"])) {
-      $error = "Please fill all the fields.";
-    } else if (strlen($_POST["phone_number"]) < 9) {
-      $error = "Phone number must be at least 9 characters.";
-    } else {
-      $name = $_POST["name"];
-      $phoneNumber = $_POST["phone_number"];
-
-      $statement = $conn->prepare("INSERT INTO contacts (user_id, name, phone_number) VALUES (:id, :name, :phone_number)");
-      $statement->execute([
-        ":id" => $_SESSION['user']['id'],
-        ":name" => $_POST["name"],
-        ":phone_number" => $_POST["phone_number"]
-      ]);
-
-      $_SESSION["flash"] = [
-        "message" => "Contact {$_POST['name']} added.",
-        "color" => "success"
-      ];
-
-      header("Location: home.php");
-      return;
-    }
-  }
 ?>
 
 <?php require "partials/header.php" ?>
@@ -40,9 +16,9 @@
       <div class="card">
         <div class="card-header">Add New Contact</div>
         <div class="card-body">
-          <?php if ($error): ?>
+          <?php if ($_SESSION["error"]["explanation"]): ?>
             <p class="text-danger">
-              <?= $error ?>
+              <?= $_SESSION["error"]["explanation"] ?>
             </p>
           <?php endif ?>
           <form method="POST" action="add.php">
@@ -50,15 +26,30 @@
               <label for="name" class="col-md-4 col-form-label text-md-end">Name</label>
 
               <div class="col-md-6">
-                <input id="name" type="text" class="form-control" name="name" autocomplete="name" autofocus>
+                <input 
+                  value="<?= $_SESSION["error"]["saved_name"] ?>"
+                  id="name"
+                  type="text"
+                  class="form-control"
+                  name="name"
+                  autocomplete="name"
+                  <?php if($_SESSION["error"]["type"] == 1):?> autofocus <?php endif?>
+                >
               </div>
             </div>
 
             <div class="mb-3 row">
               <label for="phone_number" class="col-md-4 col-form-label text-md-end">Phone Number</label>
-
               <div class="col-md-6">
-                <input id="phone_number" type="tel" class="form-control" name="phone_number" autocomplete="phone_number" autofocus>
+                <input 
+                  value="<?= $_SESSION["error"]["saved_phone_number"] ?>" 
+                  id="phone_number" 
+                  type="tel"
+                  class="form-control"
+                  name="phone_number"
+                  autocomplete="phone_number"
+                  <?php if($_SESSION["error"]["type"] != 1):?> autofocus <?php endif?> 
+                >
               </div>
             </div>
 
