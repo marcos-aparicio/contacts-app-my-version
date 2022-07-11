@@ -1,67 +1,50 @@
 <?php
   
-  require "./functionality/session.php";
+require "./functionality/session.php";
 
-  $id = $_GET["id"];
+HTTP_error_handling();
 
-  $statement = $conn->prepare("SELECT * FROM contacts WHERE id = :id LIMIT 1");
-  $statement->execute([":id" => $id]);
+$error = null;
+$errorType = null;
 
-  if ($statement->rowCount() == 0) {
-    http_response_code(404);
-    echo("HTTP 404 NOT FOUND");
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+  
+  if (empty($_POST["name"]) || empty($_POST["phone_number"])) {
+
+    $error = "Please fill all the fields.";
+    $contact["name"] = $_POST["name"];
+    $contact["phone_number"] = $_POST["phone_number"];
+
+    $errorType = empty($_POST["name"])? 1:2;
+  
+  } else if (strlen($_POST["phone_number"]) < 9) {
+
+    $error = "Phone number must be at least 9 characters.";
+    $contact["name"] = $_POST["name"];
+    $contact["phone_number"] = "";
+    $errorType = 2;
+    
+  } else {
+
+    $name = $_POST["name"];
+    $phoneNumber = $_POST["phone_number"];
+
+    $statement = $conn->prepare("UPDATE contacts SET name = :name, phone_number = :phone_number WHERE id = :id");
+    $statement->execute([
+      ":id" => $_GET["id"],
+      ":name" => $_POST["name"],
+      ":phone_number" => $_POST["phone_number"],
+    ]);
+
+    $_SESSION["flash"] = [
+      "message" => "Contact {$_POST['name']} updated.",
+      "color" => "info"
+    ];
+
+    header("Location: home.php");
     return;
   }
-
-  $contact = $statement->fetch(PDO::FETCH_ASSOC);
-
-  if ($contact["user_id"] !== $_SESSION["user"]["id"]) {
-    http_response_code(403);
-    echo("HTTP 403 UNAUTHORIZED");
-    return;
-  }
-
-  $error = null;
-  $errorType = null;
-
-  if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    
-    if (empty($_POST["name"]) || empty($_POST["phone_number"])) {
-
-      $error = "Please fill all the fields.";
-      $contact["name"] = $_POST["name"];
-      $contact["phone_number"] = $_POST["phone_number"];
-
-      $errorType = empty($_POST["name"])? 1:2;
-    
-    } else if (strlen($_POST["phone_number"]) < 9) {
-
-      $error = "Phone number must be at least 9 characters.";
-      $contact["name"] = $_POST["name"];
-      $contact["phone_number"] = "";
-      $errorType = 2;
-      
-    } else {
-
-      $name = $_POST["name"];
-      $phoneNumber = $_POST["phone_number"];
-
-      $statement = $conn->prepare("UPDATE contacts SET name = :name, phone_number = :phone_number WHERE id = :id");
-      $statement->execute([
-        ":id" => $id,
-        ":name" => $_POST["name"],
-        ":phone_number" => $_POST["phone_number"],
-      ]);
-
-      $_SESSION["flash"] = [
-        "message" => "Contact {$_POST['name']} updated.",
-        "color" => "info"
-      ];
-
-      header("Location: home.php");
-      return;
-    }
-  }
+}
 ?>
 
 
@@ -83,8 +66,14 @@
               <label for="name" class="col-md-4 col-form-label text-md-end">Name</label>
 
               <div class="col-md-6">
-                <input value="<?= $contact['name'] ?>" id="name" type="text" class="form-control" name="name" autocomplete="name"
-                <?php if($errorType == 1 || $errorType != 2):?> autofocus <?php endif?>
+                <input 
+                  value="<?= $contact['name'] ?>"
+                  id="name"
+                  type="text"
+                  class="form-control"
+                  name="name"
+                  autocomplete="name"
+                  <?php if($errorType == 1):?> autofocus <?php endif?>
                 >
               </div>
             </div>
@@ -92,7 +81,15 @@
             <div class="mb-3 row">
               <label for="phone_number" class="col-md-4 col-form-label text-md-end">Phone Number</label>
               <div class="col-md-6">
-                <input value="<?= $contact['phone_number'] ?>" id="phone_number" type="tel" class="form-control" name="phone_number" autocomplete="phone_number" <?php if($errorType == 2):?> autofocus <?php endif?> >
+                <input 
+                  value="<?= $contact['phone_number'] ?>" 
+                  id="phone_number" 
+                  type="tel"
+                  class="form-control"
+                  name="phone_number"
+                  autocomplete="phone_number"
+                  <?php if($errorType != 1):?> autofocus <?php endif?> 
+                >
               </div>
             </div>
 
