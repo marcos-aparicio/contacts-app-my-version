@@ -2,7 +2,31 @@
 
 require "./functionality/session.php";
 
-POST_add_contact();
+ 
+$_SESSION["error"]["saved_name"] = "";
+$_SESSION["error"]["saved_phone_number"] = "";
+$_SESSION["error"]["explanation"] = "";
+$_SESSION["error"]["type"] = 1;
+
+
+if( $_SERVER["REQUEST_METHOD"] == "POST" && isContactValidated() ){
+  
+  $statement = $conn->prepare("INSERT INTO contacts (user_id, name, phone_number) VALUES (:id, :name, :phone_number)");
+      
+  $statement->execute([
+      ":id" => $_SESSION["user"]["id"],
+      ":name" => $_POST["name"],
+      ":phone_number" => $_POST["phone_number"],
+  ]);
+  
+  $_SESSION["flash"] = [
+      "message" => "Contact {$_POST['name']} added.",
+      "color" => "success"
+  ];
+  
+  header("Location: home.php");
+  die();   
+}
 
 ?>
 

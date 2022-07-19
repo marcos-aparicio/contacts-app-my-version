@@ -9,7 +9,29 @@ $contact = $statement->fetch(PDO::FETCH_ASSOC);
 
 HTTP_error_handling($statement, $contact);
 
-POST_edit_contact();
+
+$_SESSION["error"]["saved_name"] = $contact["name"];
+$_SESSION["error"]["saved_phone_number"] = $contact["phone_number"];
+$_SESSION["error"]["explanation"] = "";
+$_SESSION["error"]["type"] = null;
+
+if( $_SERVER["REQUEST_METHOD"] == "POST" && isContactValidated() ){
+  $statement = $conn->prepare("UPDATE contacts SET name = :name, phone_number = :phone_number WHERE id = :id");
+
+  $statement->execute([
+      ":id" => $_GET["id"],
+      ":name" => $_POST["name"],
+      ":phone_number" => $_POST["phone_number"],
+  ]);
+
+  $_SESSION["flash"] = [
+      "message" => "Contact {$_POST['name']} updated.",
+      "color" => "info"
+  ];
+
+  header("Location: home.php");
+  die(); 
+}
 
 ?>
 
