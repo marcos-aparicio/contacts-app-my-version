@@ -1,5 +1,5 @@
 <?php 
-require "partials/header.php" ;
+require "partials/header.php";
 ?>
 
 <div class="welcome d-flex align-items-center justify-content-center">

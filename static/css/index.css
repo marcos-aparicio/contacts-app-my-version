@@ -10,3 +10,6 @@
     background-position: center center;
     background-size: cover;
 }
+body{
+    overflow: hidden !important;
+}

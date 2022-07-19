@@ -8,7 +8,7 @@ const resizeBakgroundImg = () => {
 };
 
 
+window.onload = resizeBakgroundImg;
 navbarToggle.ontransitionend = resizeBakgroundImg;
 navbarToggle.ontransitionstart = resizeBakgroundImg;
 window.onresize = resizeBakgroundImg;
-window.onload = resizeBakgroundImg;
