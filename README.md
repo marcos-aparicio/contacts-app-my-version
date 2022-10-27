@@ -1,3 +1,3 @@
 # contacts-app-my-version
-## Version personal del proyecto del curso PHP y la Web de Mastermind
-Modifique el codigo del proyecto para que sea mas modularizado (eso espero), le añadi modo claro y oscuro entre otras cosas.
+## Extended version of Mastermind's PHP's course final project
+Changed the code to be more modularized (I hope), added dark and light mode and other things.
