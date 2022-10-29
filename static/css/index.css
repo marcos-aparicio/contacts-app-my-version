@@ -6,7 +6,6 @@
 }
 
 .welcome {
-    background: url('/contacts_app/static/img/background.jpg');
     background-position: center center;
     background-size: cover;
 }
