@@ -34,7 +34,7 @@ $color = $styles["color"];
   <!-- Static Content -->
   <link rel="stylesheet" href="./static/css/index.css" />
   <?php $uri = parse_url($_SERVER["REQUEST_URI"], PHP_URL_PATH)?>
-  <?php if ($uri == "/contacts_app/" || $uri == "/contacts_app/index.php"): ?>
+  <?php if ($uri == "/contacts-app-my-version/" || $uri == "/contacts-app-my-version/index.php"): ?>
     <script defer src="./static/js/welcome.js"></script>
   <?php endif ?>
 
