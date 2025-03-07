@@ -13,7 +13,7 @@ Set up in other environments would be difficult to document all in one place so 
 
 ```bash
 # clone the repo
-git clone git@github.com:marcos-aparicio/contacts-app-my-version.git
+git clone https://github.com/marcos-aparicio/contacts-app-my-version.git
 cd contacts-app-my-version
 cp .env.example .env
 # make sure to check the .env before so that any ports and credentials are adjusted to your preference
