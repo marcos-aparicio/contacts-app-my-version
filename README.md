@@ -15,6 +15,8 @@ Set up in other environments would be difficult to document all in one place so 
 # clone the repo
 git clone https://github.com/marcos-aparicio/contacts-app-my-version.git
 cd contacts-app-my-version
+# don't worry, i know this is the least efficient way to change themes lol
+echo '{"color":"light"}' > ./theme_changes/colors.json
 cp .env.example .env
 # make sure to check the .env before so that any ports and credentials are adjusted to your preference
 docker compose up -d
