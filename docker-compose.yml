@@ -16,6 +16,8 @@ services:
     image: "mysql/mysql-server:8.0"
     ports:
       - "${FORWARD_DB_PORT:-3306}:3306"
+    env_file:
+      - .env
     environment:
       MYSQL_ROOT_PASSWORD: "${DB_PASSWORD}"
       MYSQL_ROOT_HOST: "%"
@@ -24,8 +26,9 @@ services:
       MYSQL_PASSWORD: "${DB_PASSWORD}"
       MYSQL_ALLOW_EMPTY_PASSWORD: 1
     volumes:
-      - database:/var/lib/mysql"
+      - database:/var/lib/mysql
       - ./sql/setup.sql:/docker-entrypoint-initdb.d/setup.sql
+      - ./sql/create-db.sh:/docker-entrypoint-initdb.d/10-create-testing-database.sh
     networks:
       - red
     healthcheck:
